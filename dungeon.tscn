@@ -1,0 +1,87 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://dungeon.gd" type="Script" id=1]
+[ext_resource path="res://Fog.tscn" type="PackedScene" id=2]
+[ext_resource path="res://tileset.tres" type="TileSet" id=3]
+[ext_resource path="res://isotiles.png" type="Texture" id=4]
+[ext_resource path="res://troll.tscn" type="PackedScene" id=5]
+[ext_resource path="res://fog.shader" type="Shader" id=6]
+[ext_resource path="res://light.png" type="Texture" id=7]
+
+[sub_resource type="OccluderPolygon2D" id=1]
+
+polygon = PoolVector2Array( 0, 96, 64, 128, 128, 96, 64, 64 )
+
+[sub_resource type="ConvexPolygonShape2D" id=2]
+
+points = PoolVector2Array( 64, 128, 0, 96, 64, 64, 128, 96 )
+
+[sub_resource type="TileSet" id=3]
+
+0/name = "isotiles.png 0"
+0/texture = ExtResource( 4 )
+0/tex_offset = Vector2( -96, -64 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 32, 224, 128, 128 )
+0/tile_mode = 0
+0/occluder_offset = Vector2( -96, -64 )
+0/occluder = SubResource( 1 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shapes = [ {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 2 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, -96, -64 )
+} ]
+0/z_index = 0
+
+[sub_resource type="ViewportTexture" id=4]
+
+viewport_path = NodePath("Fog/Viewport")
+
+[sub_resource type="ShaderMaterial" id=5]
+
+resource_local_to_scene = true
+shader = ExtResource( 6 )
+shader_param/viewport = SubResource( 4 )
+
+[node name="dungeon" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="Fog" parent="." instance=ExtResource( 2 )]
+
+[node name="floor" type="TileMap" parent="."]
+mode = 1
+tile_set = ExtResource( 3 )
+cell_size = Vector2( 128, 64 )
+cell_tile_origin = 1
+format = 1
+tile_data = PoolIntArray( -851956, 0, -1200553578, -851955, 0, -1200553578, -851954, 0, 0, -786420, 1, -1200553578, -786419, 0, -1200553578, -786418, 0, 0, -720884, 0, -1200553578, -720883, 0, -1200553578, -720882, 0, 0, -655348, 1, -1200553578, -655347, 0, -1200553578, -655346, 0, 0, -589812, 1, -1200553578, -589811, 0, -1200553578, -589810, 0, 0, -524276, 0, -1200553578, -524275, 1, -1200553578, -524274, 0, 0, -458740, 0, -1200553578, -458739, 0, -1200553578, -458738, 0, 0, -393210, 0, -1200553578, -393209, 0, -1200553578, -393208, 0, -1200553578, -393207, 0, -1200553578, -393206, 0, -1200553578, -393205, 0, -1200553578, -393204, 0, -1200553578, -393203, 0, -1200553578, -393202, 0, 0, -327674, 0, -1200553578, -327673, 0, -1200553578, -327672, 1, -1200553578, -327671, 1, -1200553578, -327670, 1, -1200553578, -327669, 1, -1200553578, -327668, 1, -1200553578, -327667, 0, -1200553578, -327666, 0, 0, -262138, 0, -1200553578, -262137, 0, -1200553578, -262136, 0, -1200553578, -262135, 0, -1200553578, -262134, 0, -1200553578, -262133, 0, -1200553578, -262132, 0, -1200553578, -262131, 0, -1200553578, -262130, 0, 0, -196602, 0, -1200553578, -196601, 0, -1200553578, -196600, 0, -1200553578, -196599, 0, 0, -196598, 0, 0, -196597, 0, 0, -196596, 0, 0, -196595, 0, 0, -196594, 0, 0, -131066, 0, 0, -131065, 0, -1200553578, -131064, 0, -1200553578, -131063, 0, 0, -131062, 0, 0, -131061, 0, 0, -131060, 0, 0, -131059, 0, 0, -131058, 0, 0, -65535, 0, 0, -65534, 0, 0, -65533, 0, 0, -65532, 0, 0, -65531, 0, 0, -65530, 0, 0, -65529, 0, 0, -65528, 0, 0, -65527, 0, 0, -65526, 0, 0, -65525, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 65539, 0, 0, 65540, 0, 0, 65541, 0, 0, 65542, 0, 0, 65543, 0, 0, 65544, 0, 0, 65545, 0, 0, 65546, 0, 0, 131077, 0, 0, 131078, 0, 0, 131079, 0, 0, 131080, 0, 0, 131081, 0, 0, 131082, 0, 0, 196613, 0, 0, 196614, 0, 0, 196615, 0, 0, 196616, 0, 0, 196617, 0, 0 )
+
+[node name="walls" type="TileMap" parent="."]
+mode = 1
+tile_set = SubResource( 3 )
+cell_size = Vector2( 128, 64 )
+cell_tile_origin = 1
+cell_y_sort = true
+format = 1
+tile_data = PoolIntArray( -851956, 0, 0, -851955, 0, 0, -851954, 0, 0, -786421, 0, 0, -786418, 0, 0, -720885, 0, 0, -720882, 0, 0, -655349, 0, 0, -655346, 0, 0, -589813, 0, 0, -589810, 0, 0, -524277, 0, 0, -524274, 0, 0, -458746, 0, 0, -458745, 0, 0, -458744, 0, 0, -458743, 0, 0, -458742, 0, 0, -458741, 0, 0, -458738, 0, 0, -393210, 0, 0, -393202, 0, 0, -327674, 0, 0, -327666, 0, 0, -262138, 0, 0, -262130, 0, 0, -196602, 0, 0, -196597, 0, 0, -196596, 0, 0, -196595, 0, 0, -196594, 0, 0, -131071, 0, 0, -131070, 0, 0, -131069, 0, 0, -131068, 0, 0, -131067, 0, 0, -131066, 0, 0, -131061, 0, 0, -65535, 0, 0, 2, 0, 0, 3, 0, 0, 65540, 0, 0, 131076, 0, 0, 131077, 0, 0, 131078, 0, 0, 131081, 0, 0, 196614, 0, 0, 196615, 0, 0, 196616, 0, 0 )
+
+[node name="troll" parent="walls" instance=ExtResource( 5 )]
+position = Vector2( 368.142, 340.007 )
+
+[node name="TextureRect" type="TextureRect" parent="."]
+material = SubResource( 5 )
+texture = ExtResource( 7 )
+expand = true
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color( 0.152672, 0.152672, 0.152672, 1 )
+
+[node name="Camera2D2" type="Camera2D" parent="."]
+current = true
+zoom = Vector2( 5, 5 )
+
+
+[editable path="Fog"]
