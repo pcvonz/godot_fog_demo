@@ -13,22 +13,21 @@ var map_position
 var vp
 var fog_vp
 
-onready var iso_to_cart = Transform2D().scaled(Vector2(1, 0.5)) * Transform2D(PI/4, Vector2()) # Scale a transformation then rotate it (or maybe rotate then scale, not sure how it worked exactly..) onready var cart_to_iso = tile_to_world.affine_inverse() # Inverse
+onready var iso_to_cart = Transform2D().scaled(Vector2(1, 0.5)) * Transform2D.rotated(PI/4+PI/2) # Scale a transformation then rotate it (or maybe rotate then scale, not sure how it worked exactly..)
 onready var cart_to_iso = iso_to_cart.affine_inverse()
 func _ready():
 	f = get_node('floor')
-	t = get_node("TextureRect")
-#	var sprite = $Sprite
+	t = get_node("Node2D")
 	vp = get_viewport()
 	fog_vp = $Fog/Viewport
 	map_rect = f.get_used_rect()
-	map_size = Vector2(map_rect.size.y, map_rect.size.x) * f.cell_size
+	map_size = map_rect.size * f.cell_size
 	fog_vp.size = map_size
-	map_position = f.map_to_world(map_rect.position)
-	var end_coord = f.map_to_world(map_rect.end)
-	t.margin_right = end_coord.x
-	t.margin_bottom = end_coord.y
-#	t.rect_position = map_position
+	map_position = iso_to_cart.xform_inv(f.map_to_world(map_rect.position))
+	iso_to_cart = iso_to_cart.translated(map_position)
+	t.get_node("TextureRect").rect_size = map_size
+	t.transform = iso_to_cart
+	$Fog.transform = iso_to_cart
 
 func _physics_process(delta):
-	get_node('Fog/Viewport/Node2D/Sprite').position = $walls/troll.position - Vector2(400, 128)
+	get_node('Fog/Viewport/Node2D/Sprite').position = iso_to_cart.xform_inv($walls/troll.position)
