@@ -1,0 +1,31 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Fog/fog.shader" type="Shader" id=1]
+[ext_resource path="res://Fog/FogParent.gd" type="Script" id=2]
+[ext_resource path="res://Fog/Fog.tscn" type="PackedScene" id=3]
+
+[sub_resource type="ViewportTexture" id=1]
+viewport_path = NodePath("FogParent/Fog/Viewport")
+
+[sub_resource type="ShaderMaterial" id=2]
+resource_local_to_scene = true
+shader = ExtResource( 1 )
+shader_param/viewport = SubResource( 1 )
+
+[sub_resource type="ImageTexture" id=3]
+size = Vector2( 100, 100 )
+
+[node name="FogParent" type="Node"]
+script = ExtResource( 2 )
+
+[node name="FogTarget" type="Node2D" parent="."]
+visible = false
+
+[node name="TextureRect" type="TextureRect" parent="FogTarget"]
+material = SubResource( 2 )
+margin_right = 260.0
+margin_bottom = 186.0
+texture = SubResource( 3 )
+expand = true
+
+[node name="Fog" parent="." instance=ExtResource( 3 )]
